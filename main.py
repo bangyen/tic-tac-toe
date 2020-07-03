@@ -22,7 +22,8 @@ FONT = pygame.font.Font("assets/PressStart2P.ttf", 40)
 
 def get_part_of_grid(i):
     # [(x1, x2), (y1, y2)]
-    return [(0 + 100 * (i % 3), 100 + 100 * (i % 3)), (0 + 100 * floor(i / 3), 100 + 100 * floor(i / 3))]
+    y, x = map(lambda x: 100 * x, divmod(5, 3))
+    return [(x, x + 100), (y, y + 100)]
 
 
 def get_index_of_grid(x, y):
@@ -40,16 +41,14 @@ def main():
     running = True
 
     def can_play(i):
-        return False if i in x_plays or i in o_plays else True
+        return i not in [*x_plays, *o_plays]
 
     def isover():
         for pos in WIN_POS:
-            if pos[0] in x_plays and pos[1] in x_plays and pos[2] in x_plays:
-                return True
-            if pos[0] in o_plays and pos[1] in o_plays and pos[2] in o_plays:
+            if not set(pos) - set(x_plays) or not set(pos) - set(o_plays):
                 return True
 
-        if len(x_plays) == 4 and len(o_plays) == 5 or len(x_plays) == 5 and len(o_plays) == 4:
+        if (len(x_plays), len(o_plays)) in [(4, 5), (5, 4)]:
             return True
 
     def draw_players():
