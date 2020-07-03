@@ -22,7 +22,7 @@ FONT = pygame.font.Font("assets/PressStart2P.ttf", 40)
 
 def get_part_of_grid(i):
     # [(x1, x2), (y1, y2)]
-    y, x = map(lambda x: 100 * x, divmod(5, 3))
+    y, x = map(lambda x: 100 * x, divmod(i, 3))
     return [(x, x + 100), (y, y + 100)]
 
 
